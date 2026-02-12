@@ -101,7 +101,7 @@
 
     .hint {
       margin-top: 10px;
-      font-size: 30px;
+      font-size: 15px;
       opacity: .7;
     }
 
@@ -179,10 +179,10 @@
     </section>
 
     <!-- HINT -->
-    <div class="hint" id="hint">“No” doesn't seem to work? I wonder why?😊</div>
+    <div class="hint" id="hint">“No” doesn't seem to work?😊</div>
 
     <section class="result" id="result">
-      <h2>YAY! 🎉</h2>
+      <h2>yay! lets go I thought you were gonna pick no</h2>
       <img
         class="fireworks"
         src="https://i5.walmartimages.com/seo/MaoGoLan-36-Large-Teddy-Bear-Stuffed-Animal-with-Footprint-Giant-Bear-Plush-Toy_879b9994-c7a3-4ee1-843f-beaa0c75b671.8f7dec0e34049b58d3a3449fef7ea5f6.jpeg"
@@ -246,7 +246,7 @@
     /* ---------- YES BUTTON GROWS ---------- */
     let yesScale = 1;
     function growYes() {
-      yesScale = Math.min(2.2, yesScale + 0.5);
+      yesScale = Math.min(3, yesScale + 0.1);
       yesBtn.style.transform = `translateY(-50%) scale(${yesScale})`;
     }
 
@@ -300,6 +300,7 @@
   </script>
 </body>
 </html>
+
 
 
 
