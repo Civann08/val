@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Ashley will you be my valentine?</title>
+  <title>Will you be my Valentine?</title>
 
   <!-- Confetti library -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
@@ -15,8 +15,6 @@
       --card: #ffffffcc;
       --yes: #ff3b7a;
       --yesHover: #ff1f68;
-      --muted: #6b7280;
-      --shadow: rgba(0,0,0,.14);
     }
 
     * { box-sizing: border-box; }
@@ -44,12 +42,14 @@
 
     .card {
       width: min(720px, 92vw);
+      max-height: 80vh;
+      overflow-y: auto;
       padding: 26px 22px;
       background: var(--card);
       backdrop-filter: blur(10px);
       border-radius: 22px;
       text-align: center;
-      box-shadow: 0 18px 60px var(--shadow);
+      box-shadow: 0 18px 60px rgba(0,0,0,.15);
     }
 
     .art {
@@ -82,7 +82,7 @@
       border-radius: 999px;
       border: none;
       cursor: pointer;
-      box-shadow: 0 10px 24px var(--shadow);
+      box-shadow: 0 10px 24px rgba(0,0,0,.14);
       user-select: none;
       -webkit-tap-highlight-color: transparent;
       transition: transform .12s ease, background .12s ease;
@@ -113,190 +113,125 @@
       animation: pop .35s ease;
     }
 
-    .result h2 {
-      font-size: clamp(30px, 4.5vw, 46px);
-      margin: 10px 0;
-    }
-
-    .fireworks {
-      width: min(380px, 90vw);
-      margin: 0 auto;
-      display: block;
-      border-radius: 12px;
-      box-shadow: 0 10px 30px rgba(0,0,0,.12);
-    }
-
     @keyframes pop {
       from { transform: scale(.96); opacity: 0; }
       to { transform: scale(1); opacity: 1; }
     }
 
-    /* ========== GALLERY ========== */
+    /* ----- GALLERY ----- */
+    .gallery-container {
+      margin: 20px 0;
+    }
     .gallery {
-      position: relative;
-      width: min(560px, 92vw);
-      margin: 0 auto 18px;
-      display: grid;
-      place-items: center;
-      gap: 8px;
-    }
-
-    .gallery img {
-      width: 100%;
-      height: auto;
-      max-height: 420px;
-      object-fit: cover;
-      border-radius: 12px;
-      box-shadow: 0 14px 40px rgba(0,0,0,.12);
-      background: linear-gradient(180deg, #fff, #f9f7f8);
-    }
-
-    .nav {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      font-size: 20px;
-      font-weight: 700;
-      color: #111827;
-      background: #fff;
-      box-shadow: 0 8px 18px rgba(0,0,0,.12);
-      border: none;
-      cursor: pointer;
-      user-select: none;
-    }
-    .nav.left { left: 8px; }
-    .nav.right { right: 8px; }
-
-    .caption {
-      font-size: 14px;
-      color: var(--muted);
-      opacity: .9;
-      margin-top: 6px;
-    }
-
-    /* ========== ENVELOPE & LETTER ========== */
-    .envelope-zone {
-      display: flex;
-      gap: 18px;
-      align-items: flex-start;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-top: 6px;
-    }
-
-    .envelope {
-      width: 220px;
-      height: 140px;
-      position: relative;
-      cursor: pointer;
-      perspective: 800px;
-    }
-
-    /* envelope base */
-    .env-base {
-      position: absolute;
-      inset: 0;
-      border-radius: 12px;
-      background: linear-gradient(180deg,#fff,#fff0);
-      box-shadow: 0 12px 30px rgba(0,0,0,.12);
       display: flex;
       align-items: center;
       justify-content: center;
-      overflow: visible;
-    }
-
-    /* flap (front) - will rotate to open */
-    .env-flap {
-      position: absolute;
-      inset: 0;
-      transform-origin: top center;
-      transition: transform .6s cubic-bezier(.2,.9,.3,1);
-      z-index: 5;
-      pointer-events: none;
-    }
-
-    .env-flap.open {
-      transform: rotateX(-180deg) translateY(-6px);
-    }
-
-    .env-paper {
-      position: absolute;
-      left: 12px;
-      right: 12px;
-      top: 16px;
-      bottom: 14px;
-      background: linear-gradient(180deg,#fff,#fff);
-      border-radius: 6px;
-      box-shadow: inset 0 -1px 0 rgba(0,0,0,.03);
-      z-index: 2;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    /* letter area (hidden until flap opens) */
-    .letter {
-      width: min(520px, 92vw);
-      max-width: 520px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.95));
-      border-radius: 12px;
-      padding: 18px;
-      box-shadow: 0 12px 36px rgba(0,0,0,.12);
-      display: none;
-      flex-direction: column;
       gap: 10px;
     }
+    .gallery img {
+      max-width: 100%;
+      max-height: 300px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+    .gallery button {
+      position: static;
+      transform: none;
+      background: rgba(255,255,255,0.8);
+      border: none;
+      font-size: 28px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: background 0.2s;
+      color: #333;
+      padding: 0;
+      line-height: 1;
+    }
+    .gallery button:hover {
+      background: white;
+    }
 
-    .letter.open { display: flex; }
+    /* ----- ENVELOPE & LETTER ----- */
+    .envelope-container {
+      margin: 40px 0 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .envelope {
+      position: relative;
+      width: 200px;
+      height: 140px;
+      background: #f9c9b6;
+      border-radius: 8px 8px 4px 4px;
+      cursor: pointer;
+      box-shadow: 0 10px 18px rgba(0,0,0,0.2);
+      transition: transform 0.2s;
+    }
+    .envelope:hover {
+      transform: scale(1.02);
+    }
+    .envelope .flap {
+      position: absolute;
+      top: -20px;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-left: 100px solid transparent;
+      border-right: 100px solid transparent;
+      border-bottom: 30px solid #f9b89b;
+      border-radius: 6px 6px 0 0;
+    }
+    .envelope .body {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 100px;
+      background: #f9c9b6;
+      border-radius: 0 0 8px 8px;
+    }
+    /* little shadow to separate flap */
+    .envelope::after {
+      content: '';
+      position: absolute;
+      top: -5px;
+      left: 10px;
+      right: 10px;
+      height: 10px;
+      background: rgba(0,0,0,0.05);
+      border-radius: 50%;
+      filter: blur(2px);
+    }
 
+    .letter {
+      width: 100%;
+      max-width: 500px;
+      margin-top: 20px;
+      background: #fff9e6;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      text-align: left;
+    }
     .letter textarea {
       width: 100%;
-      min-height: 260px; /* plenty of space to write */
-      resize: vertical;
-      border: 1px dashed rgba(0,0,0,.06);
-      padding: 18px;
-      border-radius: 10px;
+      min-height: 200px;
+      padding: 16px;
+      font-family: inherit;
       font-size: 16px;
-      line-height: 1.45;
-      background: transparent;
+      border: 2px solid #ffe0e0;
+      border-radius: 16px;
+      resize: vertical;
+      background: #fffff5;
+      box-shadow: inset 0 2px 6px rgba(0,0,0,0.05);
+    }
+    .letter textarea:focus {
       outline: none;
-      box-shadow: none;
+      border-color: var(--yes);
     }
-
-    .letter .actions {
-      display: flex;
-      gap: 10px;
-      justify-content: flex-end;
-    }
-
-    .btn-ghost {
-      background: transparent;
-      border: 1px solid rgba(0,0,0,.08);
-      padding: 10px 14px;
-      border-radius: 10px;
-      cursor: pointer;
-    }
-
-    .btn-primary {
-      background: var(--yes);
-      color: #fff;
-      border: none;
-      padding: 10px 14px;
-      border-radius: 10px;
-      cursor: pointer;
-    }
-
-    /* small screens adjustments */
-    @media (max-width: 520px) {
-      .envelope { width: 180px; height: 120px; }
-      .letter textarea { min-height: 200px; }
-    }
-
   </style>
 </head>
 
@@ -304,8 +239,9 @@
   <canvas id="confettiCanvas"></canvas>
 
   <main class="card">
-    <!-- ANIMAL WITH HEART -->
+    <!-- ANIMAL WITH HEART (unchanged) -->
     <svg class="art" viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg">
+      <!-- ... (keep the whole SVG as before) ... -->
       <defs>
         <linearGradient id="fur" x1="0" x2="1">
           <stop offset="0" stop-color="#f7c7a1"/>
@@ -316,30 +252,13 @@
           <stop offset="1" stop-color="#ff1f68"/>
         </linearGradient>
       </defs>
-
-      <path d="M250 50 C250 33 270 25 282 38
-               C294 25 314 33 314 50
-               C314 78 282 92 282 106
-               C282 92 250 78 250 50Z"
-            fill="url(#heart)"/>
-
-      <path d="M90 120 C90 70 140 40 190 60
-               C240 40 290 70 290 120
-               C290 180 240 210 190 210
-               C140 210 90 180 90 120Z"
-            fill="url(#fur)"/>
-
+      <path d="M250 50 C250 33 270 25 282 38 C294 25 314 33 314 50 C314 78 282 92 282 106 C282 92 250 78 250 50Z" fill="url(#heart)"/>
+      <path d="M90 120 C90 70 140 40 190 60 C240 40 290 70 290 120 C290 180 240 210 190 210 C140 210 90 180 90 120Z" fill="url(#fur)"/>
       <path d="M110 92 L95 55 L140 78 Z" fill="#f2a97b"/>
       <path d="M270 92 L285 55 L240 78 Z" fill="#f2a97b"/>
-
       <circle cx="160" cy="130" r="8"/>
       <circle cx="220" cy="130" r="8"/>
-
-      <path d="M190 144 C186 144 182 148 182 152
-               C182 160 190 164 190 170
-               C190 164 198 160 198 152
-               C198 148 194 144 190 144Z"
-            fill="#ff7aa2"/>
+      <path d="M190 144 C186 144 182 148 182 152 C182 160 190 164 190 170 C190 164 198 160 198 152 C198 148 194 144 190 144Z" fill="#ff7aa2"/>
     </svg>
 
     <h1>Ashley will you be my valentine?</h1>
@@ -352,47 +271,28 @@
     <!-- HINT -->
     <div class="hint" id="hint">“No” doesn't seem to work?😊</div>
 
-    <!-- RESULT: replaced with gallery + envelope + letter -->
+    <!-- RESULT SECTION (GALLERY + ENVELOPE) -->
     <section class="result" id="result">
-      <h2 id="resultTitle">yay! lets go I thought you were gonna pick no</h2>
+      <h2>yay! lets go I thought you were gonna pick no</h2>
 
-      <!-- Gallery -->
-      <div class="gallery" id="gallery" aria-live="polite">
-        <button class="nav left" id="prev" aria-label="Previous photo">&larr;</button>
-        <img id="galleryImg" class="fireworks" src="" alt="Photo 1"/>
-        <button class="nav right" id="next" aria-label="Next photo">&rarr;</button>
-        <div class="caption" id="caption">1 / 1</div>
+      <!-- Image Gallery -->
+      <div class="gallery-container">
+        <div class="gallery">
+          <button class="prev" id="prevBtn">&#10094;</button>
+          <img id="galleryImg" src="" alt="Memory">
+          <button class="next" id="nextBtn">&#10095;</button>
+        </div>
       </div>
 
-      <!-- Envelope + Letter -->
-      <div class="envelope-zone">
-        <div class="envelope" id="envelope" role="button" tabindex="0" aria-pressed="false" aria-label="Open letter">
-          <div class="env-base">
-            <!-- paper showing through -->
-            <div class="env-paper"></div>
-          </div>
-
-          <!-- triangular flap (front) -->
-          <svg class="env-flap" viewBox="0 0 220 140" preserveAspectRatio="none" id="envFlap">
-            <defs>
-              <linearGradient id="envGrad" x1="0" x2="1">
-                <stop offset="0" stop-color="#fff"/>
-                <stop offset="1" stop-color="#fff0"/>
-              </linearGradient>
-            </defs>
-            <polygon points="110,8 214,68 6,68" fill="url(#envGrad)" stroke="rgba(0,0,0,0.04)"/>
-            <!-- small heart on flap -->
-            <path d="M110 40 C110 28 122 22 132 28 C140 34 142 44 132 52 C122 60 110 52 110 40 Z"
-                  fill="url(#heart)" transform="translate(-2,-6) scale(0.9)"/>
-          </svg>
+      <!-- Envelope & Letter -->
+      <div class="envelope-container">
+        <div class="envelope" id="envelope">
+          <div class="flap"></div>
+          <div class="body"></div>
         </div>
-
-        <div class="letter" id="letter">
-          <textarea id="letterText" placeholder="Write your letter here... (plenty of space)"></textarea>
-          <div class="actions">
-            <button class="btn-ghost" id="saveDraft">Save draft</button>
-            <button class="btn-primary" id="closeLetter">Close letter</button>
-          </div>
+        <div class="letter" id="letter" style="display: none;">
+          <!-- Leave this textarea empty for typing, or pre-fill with your message -->
+          <textarea placeholder="Write your letter here..."></textarea>
         </div>
       </div>
     </section>
@@ -405,7 +305,7 @@
     const result = document.getElementById("result");
     const hint = document.getElementById("hint");
 
-    /* ---------- CONFETTI ---------- */
+    /* ---------- CONFETTI (unchanged) ---------- */
     const confettiCanvas = document.getElementById("confettiCanvas");
 
     function resizeConfettiCanvas() {
@@ -450,14 +350,14 @@
       }, 300);
     }
 
-    /* ---------- YES BUTTON GROWS ---------- */
+    /* ---------- YES BUTTON GROWS (unchanged) ---------- */
     let yesScale = 1;
     function growYes() {
       yesScale = Math.min(3, yesScale + 0.1);
       yesBtn.style.transform = `translateY(-50%) scale(${yesScale})`;
     }
 
-    /* ---------- NO BUTTON RUNS AWAY ---------- */
+    /* ---------- NO BUTTON RUNS AWAY (unchanged) ---------- */
     function clamp(n, min, max) {
       return Math.max(min, Math.min(max, n));
     }
@@ -496,119 +396,58 @@
 
     noBtn.addEventListener("click", e => e.preventDefault());
 
-    /* ---------- GALLERY SETUP ---------- */
-    const images = [
-      // Replace these example URLs with your own image links
-      "https://i5.walmartimages.com/seo/MaoGoLan-36-Large-Teddy-Bear-Stuffed-Animal-with-Footprint-Giant-Bear-Plush-Toy_879b9994-c7a3-4ee1-843f-beaa0c75b671.8f7dec0e34049b58d3a3449fef7ea5f6.jpeg",
-      "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=1200&q=60",
-      "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1200&q=60"
+    /* ---------- GALLERY ---------- */
+    // TODO: Replace these URLs with your own image links
+    const imageUrls = [
+      "https://via.placeholder.com/600x400?text=Photo+1",
+      "https://via.placeholder.com/600x400?text=Photo+2",
+      "https://via.placeholder.com/600x400?text=Photo+3"
     ];
-    let idx = 0;
-    const galleryImg = document.getElementById("galleryImg");
-    const caption = document.getElementById("caption");
-    const prevBtn = document.getElementById("prev");
-    const nextBtn = document.getElementById("next");
 
-    function updateGallery() {
-      galleryImg.src = images[idx];
-      galleryImg.alt = `Photo ${idx + 1}`;
-      caption.textContent = `${idx + 1} / ${images.length}`;
-      prevBtn.disabled = idx === 0;
-      nextBtn.disabled = idx === images.length - 1;
-      prevBtn.style.opacity = idx === 0 ? 0.6 : 1;
-      nextBtn.style.opacity = idx === images.length - 1 ? 0.6 : 1;
+    let currentImageIndex = 0;
+    const galleryImg = document.getElementById("galleryImg");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+
+    function showImage() {
+      galleryImg.src = imageUrls[currentImageIndex];
     }
 
     prevBtn.addEventListener("click", () => {
-      if (idx > 0) { idx--; updateGallery(); }
+      currentImageIndex = (currentImageIndex - 1 + imageUrls.length) % imageUrls.length;
+      showImage();
     });
+
     nextBtn.addEventListener("click", () => {
-      if (idx < images.length - 1) { idx++; updateGallery(); }
+      currentImageIndex = (currentImageIndex + 1) % imageUrls.length;
+      showImage();
     });
 
-    // keyboard support
-    document.addEventListener("keydown", (e) => {
-      if (result.style.display !== "block") return;
-      if (e.key === "ArrowLeft") prevBtn.click();
-      if (e.key === "ArrowRight") nextBtn.click();
-    });
-
-    // lazy-init gallery after yes click
-    let galleryInitialized = false;
-    function initGallery() {
-      if (galleryInitialized) return;
-      galleryInitialized = true;
-      if (!images || images.length === 0) {
-        images.push(galleryImg.src || "");
-      }
-      updateGallery();
-    }
-
-    /* ---------- ENVELOPE & LETTER ---------- */
+    /* ---------- ENVELOPE ---------- */
     const envelope = document.getElementById("envelope");
-    const envFlap = document.getElementById("envFlap");
     const letter = document.getElementById("letter");
-    const closeLetter = document.getElementById("closeLetter");
-    const saveDraft = document.getElementById("saveDraft");
-    const letterText = document.getElementById("letterText");
 
-    let envelopeOpen = false;
-
-    function toggleEnvelope(openNow) {
-      envelopeOpen = (typeof openNow === "boolean") ? openNow : !envelopeOpen;
-      if (envelopeOpen) {
-        envFlap.classList.add("open");
-        letter.classList.add("open");
-        envelope.setAttribute("aria-pressed", "true");
-        // focus textarea so user can start writing immediately
-        setTimeout(() => letterText.focus(), 420);
-      } else {
-        envFlap.classList.remove("open");
-        letter.classList.remove("open");
-        envelope.setAttribute("aria-pressed", "false");
-      }
-    }
-
-    envelope.addEventListener("click", () => toggleEnvelope(true));
-    envelope.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        toggleEnvelope(true);
-      }
-      if (e.key === "Escape") toggleEnvelope(false);
+    envelope.addEventListener("click", () => {
+      envelope.style.display = "none";
+      letter.style.display = "block";
     });
 
-    closeLetter.addEventListener("click", () => toggleEnvelope(false));
-    saveDraft.addEventListener("click", () => {
-      // simple local-save to localStorage (keeps content between reloads)
-      localStorage.setItem("valentine-letter", letterText.value);
-      saveDraft.textContent = "Saved ✓";
-      setTimeout(() => saveDraft.textContent = "Save draft", 1200);
-    });
-
-    // load draft if exists
-    const saved = localStorage.getItem("valentine-letter");
-    if (saved) letterText.value = saved;
-
-    /* ---------- YES CLICK ---------- */
+    /* ---------- YES CLICK (updated) ---------- */
     yesBtn.addEventListener("click", () => {
       zone.style.display = "none";
-      hint.style.display = "none";     // HIDE THE HINT
+      hint.style.display = "none";
       result.style.display = "block";
+
+      // Initialise gallery
+      currentImageIndex = 0;
+      showImage();
+
+      // Reset envelope (in case it was opened before)
+      envelope.style.display = "block";
+      letter.style.display = "none";
+
       resizeConfettiCanvas();
       fullScreenConfetti();
-      initGallery();
-    });
-
-    /* small UX: double-clicking the gallery image toggles full-size (browser does it by default) */
-    galleryImg.addEventListener("dblclick", () => {
-      // try to open image in new tab for full view
-      window.open(images[idx], "_blank");
-    });
-
-    // ensure initial state if user uses keyboard / accessibility
-    document.addEventListener("DOMContentLoaded", () => {
-      result.style.display = "none";
     });
   </script>
 </body>
