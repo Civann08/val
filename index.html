@@ -4,10 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Will you be my Valentine?</title>
-
-  <!-- Confetti library -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
-
   <style>
     :root {
       --bg1: #ffd6e7;
@@ -16,9 +13,7 @@
       --yes: #ff3b7a;
       --yesHover: #ff1f68;
     }
-
     * { box-sizing: border-box; }
-
     body {
       margin: 0;
       min-height: 100svh;
@@ -28,10 +23,8 @@
       font-family: system-ui, sans-serif;
       overflow: hidden;
       padding: 16px;
-      position: relative; /* for absolute positioning of No button */
+      position: relative;
     }
-
-    /* FULL-SCREEN CONFETTI CANVAS */
     #confettiCanvas {
       position: fixed;
       inset: 0;
@@ -40,7 +33,6 @@
       pointer-events: none;
       z-index: 9999;
     }
-
     .card {
       width: min(720px, 92vw);
       max-height: 85vh;
@@ -52,19 +44,16 @@
       text-align: center;
       box-shadow: 0 18px 60px rgba(0,0,0,.15);
     }
-
     .art {
       width: min(260px, 80vw);
       margin: 0 auto 10px;
       display: block;
       filter: drop-shadow(0 10px 14px rgba(0,0,0,.12));
     }
-
     h1 {
       font-size: clamp(26px, 4vw, 44px);
       margin: 12px 0 18px;
     }
-
     .button-zone {
       position: relative;
       width: min(520px, 92%);
@@ -72,8 +61,6 @@
       margin: 0 auto;
       touch-action: none;
     }
-
-    /* Yes button stays inside the zone */
     #yesBtn {
       position: absolute;
       top: 50%;
@@ -93,8 +80,6 @@
       color: #fff;
     }
     #yesBtn:hover { background: var(--yesHover); }
-
-    /* No button is now FIXED to the whole screen */
     #noBtn {
       position: fixed;
       top: 50%;
@@ -111,31 +96,24 @@
       -webkit-tap-highlight-color: transparent;
       background: #e5e7eb;
       color: #111827;
-      z-index: 20000; /* above everything */
+      z-index: 20000;
     }
-
     .hint {
       margin-top: 10px;
       font-size: 15px;
       opacity: .7;
     }
-
-    /* PAGES INSIDE RESULT */
     .page {
       display: none;
       animation: pop .35s ease;
     }
-
     .page.active {
       display: block;
     }
-
     @keyframes pop {
       from { transform: scale(.96); opacity: 0; }
       to { transform: scale(1); opacity: 1; }
     }
-
-    /* GALLERY PAGE */
     .gallery-container {
       margin: 20px 0;
     }
@@ -170,39 +148,42 @@
     .gallery button:hover {
       background: white;
     }
-
-    /* FIXED NAVIGATION BUTTONS - smaller & no movement */
-    .fixed-btn {
+    /* FIXED BUTTON CONTAINER - perfect alignment */
+    .fixed-button-container {
       position: fixed;
       bottom: 20px;
       right: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
       z-index: 10000;
+    }
+    .fixed-btn {
       border: none;
-      padding: 8px 20px;          /* smaller padding */
-      font-size: 16px;             /* smaller font */
+      padding: 8px 20px;
+      font-size: 16px;
       border-radius: 40px;
       cursor: pointer;
       box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-      transition: background-color 0.2s;  /* only background changes */
-      transform: none !important;   /* no transforms ever */
+      transition: background-color 0.2s;
+      transform: none !important;
+      margin: 0; /* no extra margins */
+      width: auto;
     }
     #toLetterBtn {
       background: var(--yes);
       color: white;
     }
     #toLetterBtn:hover {
-      background: #ff1f68;         /* darker pink, no scaling */
+      background: #ff1f68;
     }
     #backToGalleryBtn {
       background: #e5e7eb;
       color: #333;
-      bottom: 80px;                /* stacked above */
     }
     #backToGalleryBtn:hover {
-      background: #d1d5db;          /* slightly darker gray */
+      background: #d1d5db;
     }
-
-    /* LETTER PAGE */
     .envelope-container {
       margin: 30px 0;
       display: flex;
@@ -242,7 +223,6 @@
       background: #f9c9b6;
       border-radius: 0 0 8px 8px;
     }
-
     .letter {
       width: 100%;
       max-width: 550px;
@@ -259,26 +239,23 @@
     .letter p {
       margin: 1em 0;
     }
-
-    /* Hide fixed navigation buttons by default */
+    /* Hide fixed buttons by default */
     .fixed-btn {
       display: none;
     }
   </style>
 </head>
-
 <body>
   <canvas id="confettiCanvas"></canvas>
-
-  <!-- NO BUTTON (fixed to screen) -->
   <button id="noBtn">No</button>
 
-  <!-- FIXED NAVIGATION BUTTONS (visible only after Yes) -->
-  <button class="fixed-btn" id="toLetterBtn">Read the letter 💌</button>
-  <button class="fixed-btn" id="backToGalleryBtn">← Back to photos</button>
+  <!-- FIXED BUTTON CONTAINER (perfectly aligned) -->
+  <div class="fixed-button-container">
+    <button class="fixed-btn" id="toLetterBtn">Read the letter 💌</button>
+    <button class="fixed-btn" id="backToGalleryBtn">← Back to photos</button>
+  </div>
 
   <main class="card">
-    <!-- INITIAL CONTENT (shown before Yes) -->
     <div id="initialContent">
       <svg class="art" viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg">
         <defs>
@@ -299,47 +276,35 @@
         <circle cx="220" cy="130" r="8"/>
         <path d="M190 144 C186 144 182 148 182 152 C182 160 190 164 190 170 C190 164 198 160 198 152 C198 148 194 144 190 144Z" fill="#ff7aa2"/>
       </svg>
-
       <h1>Ashley will you be my valentine?</h1>
-
       <section class="button-zone" id="zone">
         <button id="yesBtn">Yes</button>
-        <!-- No button is now outside -->
       </section>
-
       <div class="hint" id="hint">“No” doesn't seem to work?😊</div>
     </div>
 
-    <!-- RESULT SECTIONS (hidden until Yes) -->
     <div id="result">
-      <!-- GALLERY PAGE -->
       <div id="galleryPage" class="page">
         <h2>yay! lets go I thought you were gonna pick no</h2>
-
         <div class="gallery-container">
           <div class="gallery">
-            <button class="prev" id="prevBtn" aria-label="Previous image">&#10094;</button>
+            <button class="prev" id="prevBtn">&#10094;</button>
             <img id="galleryImg" src="" alt="Memory">
-            <button class="next" id="nextBtn" aria-label="Next image">&#10095;</button>
+            <button class="next" id="nextBtn">&#10095;</button>
           </div>
         </div>
       </div>
-
-      <!-- LETTER PAGE -->
       <div id="letterPage" class="page">
         <h2>✉️ A letter for you</h2>
-
         <div class="envelope-container">
           <div class="envelope" id="envelope">
             <div class="flap"></div>
             <div class="body"></div>
           </div>
-
-          <!-- Pre-written letter (hidden until envelope is clicked) -->
           <div class="letter" id="letter" style="display: none;">
             <!-- REPLACE THIS WITH YOUR OWN MESSAGE -->
             <p>My dearest Ashley,</p>
-            <p>From the moment we met, you've filled my days with joy and laughter. I still remember the first time we...</p>
+            <p>From the moment we met, you've filled my days with joy and laughter...</p>
             <p>I'm so glad you said yes. Happy Valentine's Day!</p>
             <p>With all my love,<br>[Your name]</p>
           </div>
@@ -349,23 +314,16 @@
   </main>
 
   <script>
-    // DOM elements
     const initialContent = document.getElementById("initialContent");
     const resultDiv = document.getElementById("result");
     const yesBtn = document.getElementById("yesBtn");
     const noBtn = document.getElementById("noBtn");
     const hint = document.getElementById("hint");
-    const zone = document.getElementById("zone"); // still used for Yes button growth trigger
-
-    // Pages
+    const zone = document.getElementById("zone");
     const galleryPage = document.getElementById("galleryPage");
     const letterPage = document.getElementById("letterPage");
-
-    // Fixed navigation buttons
     const toLetterBtn = document.getElementById("toLetterBtn");
     const backBtn = document.getElementById("backToGalleryBtn");
-
-    // Confetti
     const confettiCanvas = document.getElementById("confettiCanvas");
 
     function resizeConfettiCanvas() {
@@ -375,98 +333,60 @@
       confettiCanvas.style.width = "100vw";
       confettiCanvas.style.height = "100vh";
     }
-
     resizeConfettiCanvas();
     window.addEventListener("resize", resizeConfettiCanvas);
     window.addEventListener("orientationchange", () => setTimeout(resizeConfettiCanvas, 150));
 
-    const confettiInstance = confetti.create(confettiCanvas, {
-      resize: false,
-      useWorker: true
-    });
+    const confettiInstance = confetti.create(confettiCanvas, { resize: false, useWorker: true });
 
     function fullScreenConfetti() {
       const end = Date.now() + 1600;
       (function frame() {
-        confettiInstance({
-          particleCount: 12,
-          spread: 90,
-          startVelocity: 45,
-          ticks: 180,
-          origin: { x: Math.random(), y: Math.random() * 0.3 }
-        });
+        confettiInstance({ particleCount: 12, spread: 90, startVelocity: 45, ticks: 180, origin: { x: Math.random(), y: Math.random() * 0.3 } });
         if (Date.now() < end) requestAnimationFrame(frame);
       })();
-
       setTimeout(() => {
-        confettiInstance({
-          particleCount: 300,
-          spread: 140,
-          startVelocity: 60,
-          ticks: 220,
-          origin: { x: 0.5, y: 0.55 }
-        });
+        confettiInstance({ particleCount: 300, spread: 140, startVelocity: 60, ticks: 220, origin: { x: 0.5, y: 0.55 } });
       }, 300);
     }
 
-    // Yes button growth
     let yesScale = 1;
     function growYes() {
       yesScale = Math.min(3, yesScale + 0.1);
       yesBtn.style.transform = `translateY(-50%) scale(${yesScale})`;
     }
 
-    // No button evasion (now uses entire window)
-    function clamp(n, min, max) {
-      return Math.max(min, Math.min(max, n));
-    }
+    function clamp(n, min, max) { return Math.max(min, Math.min(max, n)); }
 
     function moveNo(px, py) {
       const b = noBtn.getBoundingClientRect();
-      const winW = window.innerWidth;
-      const winH = window.innerHeight;
-
-      // Direction away from pointer
-      let dx = (b.left + b.width / 2) - px;
-      let dy = (b.top + b.height / 2) - py;
+      const winW = window.innerWidth, winH = window.innerHeight;
+      let dx = (b.left + b.width/2) - px, dy = (b.top + b.height/2) - py;
       let mag = Math.hypot(dx, dy) || 1;
-      dx /= mag;
-      dy /= mag;
-
-      // New position (move 150px away)
-      let newLeft = b.left + dx * 150;
-      let newTop = b.top + dy * 150;
-
-      // Clamp to window edges
+      dx /= mag; dy /= mag;
+      let newLeft = b.left + dx * 150, newTop = b.top + dy * 150;
       newLeft = clamp(newLeft, 0, winW - b.width);
       newTop = clamp(newTop, 0, winH - b.height);
-
       noBtn.style.left = newLeft + "px";
       noBtn.style.top = newTop + "px";
-      noBtn.style.transform = "none"; // remove any translate
-
+      noBtn.style.transform = "none";
       growYes();
     }
 
-    // Track pointer anywhere on the page
     document.addEventListener("pointermove", e => {
       const b = noBtn.getBoundingClientRect();
-      const d = Math.hypot(
-        (b.left + b.width / 2) - e.clientX,
-        (b.top + b.height / 2) - e.clientY
-      );
+      const d = Math.hypot((b.left + b.width/2) - e.clientX, (b.top + b.height/2) - e.clientY);
       if (d < 140) moveNo(e.clientX, e.clientY);
     });
 
     noBtn.addEventListener("click", e => e.preventDefault());
 
     // ---------- GALLERY ----------
-    // ⬇️⬇️⬇️  REPLACE THESE URLS WITH YOUR OWN IMAGE LINKS  ⬇️⬇️⬇️
+    // ⬇️⬇️⬇️  REPLACE THESE WITH YOUR GOOGLE DRIVE IMAGE LINKS  ⬇️⬇️⬇️
     const imageUrls = [
-      "https://via.placeholder.com/1000x700?text=Memory+1",  // replace with your first photo
-      "https://via.placeholder.com/1000x700?text=Memory+2",  // replace with your second photo
-      "https://via.placeholder.com/1000x700?text=Memory+3",  // replace with your third photo
-      "https://via.placeholder.com/1000x700?text=Memory+4"   // replace with your fourth photo
+      "https://drive.google.com/uc?export=view&id=1TuTfA-SSPM-wREZu8VWNQxVhDPSAQOUC",
+      "https://drive.google.com/uc?export=view&id=1LN4Bw9-QDFsTCuwvp69ydLD8OnbKilVW",
+      "https://drive.google.com/uc?export=view&id=1XPpU-oMs6FgC2cdIbF1dCci4RBrbz3E7"
     ];
 
     let currentImageIndex = 0;
@@ -478,12 +398,10 @@
       galleryImg.src = imageUrls[currentImageIndex];
       galleryImg.alt = `Memory ${currentImageIndex + 1}`;
     }
-
     prevBtn.addEventListener("click", () => {
       currentImageIndex = (currentImageIndex - 1 + imageUrls.length) % imageUrls.length;
       showImage();
     });
-
     nextBtn.addEventListener("click", () => {
       currentImageIndex = (currentImageIndex + 1) % imageUrls.length;
       showImage();
@@ -492,20 +410,18 @@
     // ---------- ENVELOPE ----------
     const envelope = document.getElementById("envelope");
     const letter = document.getElementById("letter");
-
     envelope.addEventListener("click", () => {
       envelope.style.display = "none";
       letter.style.display = "block";
     });
 
-    // ---------- PAGE NAVIGATION (using fixed buttons) ----------
+    // ---------- PAGE NAVIGATION ----------
     function showGalleryPage() {
       galleryPage.classList.add("active");
       letterPage.classList.remove("active");
       toLetterBtn.style.display = "block";
       backBtn.style.display = "none";
     }
-
     function showLetterPage() {
       galleryPage.classList.remove("active");
       letterPage.classList.add("active");
@@ -514,31 +430,21 @@
       toLetterBtn.style.display = "none";
       backBtn.style.display = "block";
     }
-
     toLetterBtn.addEventListener("click", showLetterPage);
     backBtn.addEventListener("click", showGalleryPage);
 
     // ---------- YES CLICK ----------
     yesBtn.addEventListener("click", () => {
-      // Hide initial content
       initialContent.style.display = "none";
-      // Hide the No button (so it doesn't float over the gallery)
       noBtn.style.display = "none";
-      // Show result container
       resultDiv.style.display = "block";
-      // Activate gallery page first
       showGalleryPage();
-
-      // Initialise gallery
       currentImageIndex = 0;
       showImage();
-
-      // Confetti
       resizeConfettiCanvas();
       fullScreenConfetti();
     });
 
-    // Initially hide result and fixed buttons
     resultDiv.style.display = "none";
     toLetterBtn.style.display = "none";
     backBtn.style.display = "none";
