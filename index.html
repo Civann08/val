@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Ashley will you be my valentine?</title>
+  <title> Ashley will you be my Valentine?</title>
 
   <!-- Confetti library -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
@@ -40,11 +40,14 @@
       z-index: 9999;
     }
 
+    /* make card the positioning context for corner buttons */
     .card {
+      position: relative; /* <-- added */
       width: min(720px, 92vw);
       max-height: 85vh;
       overflow-y: auto;
       padding: 26px 22px;
+      padding-bottom: 140px; /* space for corner buttons so content won't be covered */
       background: var(--card);
       backdrop-filter: blur(10px);
       border-radius: 22px;
@@ -134,7 +137,7 @@
     }
     .gallery img {
       max-width: 100%;
-      max-height: 60vh;  /* larger image */
+      max-height: 60vh;
       border-radius: 20px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.25);
     }
@@ -158,7 +161,11 @@
       background: white;
     }
 
+    /* moved next/back (page-level) buttons to card corners */
     .next-btn {
+      position: absolute;
+      right: 22px;
+      bottom: 22px;
       background: var(--yes);
       color: white;
       border: none;
@@ -166,8 +173,25 @@
       font-size: 20px;
       border-radius: 40px;
       cursor: pointer;
-      margin: 25px 0 15px;
       box-shadow: 0 8px 20px rgba(255,59,122,0.3);
+      z-index: 20;
+      display: inline-block;
+    }
+
+    .back-btn {
+      position: absolute;
+      right: 22px;
+      bottom: 82px; /* stacked above the next-btn */
+      background: #e5e7eb;
+      color: #333;
+      border: none;
+      padding: 12px 25px;
+      font-size: 18px;
+      border-radius: 40px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      z-index: 20;
+      display: inline-block;
     }
 
     /* LETTER PAGE */
@@ -228,16 +252,11 @@
       margin: 1em 0;
     }
 
-    .back-btn {
-      background: #e5e7eb;
-      color: #333;
-      border: none;
-      padding: 12px 25px;
-      font-size: 18px;
-      border-radius: 40px;
-      cursor: pointer;
-      margin: 20px 0;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    /* responsive tweaks so corner buttons behave on small screens */
+    @media (max-width: 520px) {
+      .next-btn { right: 16px; bottom: 12px; padding: 12px 22px; font-size: 18px; }
+      .back-btn { right: 16px; bottom: 64px; padding: 10px 20px; font-size: 16px; }
+      .card { padding-bottom: 110px; }
     }
   </style>
 </head>
@@ -286,12 +305,13 @@
 
         <div class="gallery-container">
           <div class="gallery">
-            <button class="prev" id="prevBtn">&#10094;</button>
+            <button class="prev" id="prevBtn" aria-label="Previous image">&#10094;</button>
             <img id="galleryImg" src="" alt="Memory">
-            <button class="next" id="nextBtn">&#10095;</button>
+            <button class="next" id="nextBtn" aria-label="Next image">&#10095;</button>
           </div>
         </div>
 
+        <!-- moved to corner via CSS -->
         <button class="next-btn" id="toLetterBtn">Read the letter 💌</button>
       </div>
 
@@ -305,7 +325,7 @@
             <div class="body"></div>
           </div>
 
-          <!-- Pre‑written letter (hidden until envelope is clicked) -->
+          <!-- Pre-written letter (hidden until envelope is clicked) -->
           <div class="letter" id="letter" style="display: none;">
             <!-- REPLACE THIS WITH YOUR OWN MESSAGE -->
             <p>My dearest Ashley,</p>
@@ -315,6 +335,7 @@
           </div>
         </div>
 
+        <!-- moved to corner and stacked above the "Read the letter" button -->
         <button class="back-btn" id="backToGalleryBtn">← Back to photos</button>
       </div>
     </div>
@@ -426,11 +447,12 @@
     noBtn.addEventListener("click", e => e.preventDefault());
 
     // ---------- GALLERY ----------
-    // TODO: Replace with your own image URLs
+    // placeholder images (you can replace these URLs with your own)
     const imageUrls = [
-      "https://via.placeholder.com/800x600?text=Photo+1",
-      "https://via.placeholder.com/800x600?text=Photo+2",
-      "https://via.placeholder.com/800x600?text=Photo+3"
+      "https://via.placeholder.com/1000x700?text=Memory+1",
+      "https://via.placeholder.com/1000x700?text=Memory+2",
+      "https://via.placeholder.com/1000x700?text=Memory+3",
+      "https://via.placeholder.com/1000x700?text=Memory+4"
     ];
 
     let currentImageIndex = 0;
@@ -440,6 +462,7 @@
 
     function showImage() {
       galleryImg.src = imageUrls[currentImageIndex];
+      galleryImg.alt = `Memory ${currentImageIndex + 1}`;
     }
 
     prevBtn.addEventListener("click", () => {
@@ -501,4 +524,3 @@
   </script>
 </body>
 </html>
-
