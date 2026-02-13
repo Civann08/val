@@ -28,6 +28,7 @@
       font-family: system-ui, sans-serif;
       overflow: hidden;
       padding: 16px;
+      position: relative; /* for absolute positioning of No button */
     }
 
     /* FULL-SCREEN CONFETTI CANVAS */
@@ -72,9 +73,11 @@
       touch-action: none;
     }
 
-    button {
+    /* Yes button stays inside the zone */
+    #yesBtn {
       position: absolute;
       top: 50%;
+      left: 18%;
       transform: translateY(-50%);
       padding: 16px 24px;
       font-size: 18px;
@@ -86,19 +89,29 @@
       user-select: none;
       -webkit-tap-highlight-color: transparent;
       transition: transform .12s ease, background .12s ease;
-    }
-
-    #yesBtn {
-      left: 18%;
       background: var(--yes);
       color: #fff;
     }
     #yesBtn:hover { background: var(--yesHover); }
 
+    /* No button is now FIXED to the whole screen */
     #noBtn {
-      left: 62%;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 16px 24px;
+      font-size: 18px;
+      font-weight: 800;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 10px 24px rgba(0,0,0,.14);
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
       background: #e5e7eb;
       color: #111827;
+      z-index: 20000; /* above everything */
     }
 
     .hint {
@@ -158,34 +171,35 @@
       background: white;
     }
 
-    /* FIXED BUTTONS (screen corner) - smaller & no movement */
+    /* FIXED NAVIGATION BUTTONS - smaller & no movement */
     .fixed-btn {
       position: fixed;
       bottom: 20px;
       right: 20px;
       z-index: 10000;
       border: none;
-      padding: 10px 24px;
-      font-size: 18px;
+      padding: 8px 20px;          /* smaller padding */
+      font-size: 16px;             /* smaller font */
       border-radius: 40px;
       cursor: pointer;
       box-shadow: 0 8px 20px rgba(0,0,0,0.3);
       transition: background-color 0.2s;  /* only background changes */
+      transform: none !important;   /* no transforms ever */
     }
     #toLetterBtn {
       background: var(--yes);
       color: white;
     }
     #toLetterBtn:hover {
-      background: #ff1f68;   /* darker pink, no scaling */
+      background: #ff1f68;         /* darker pink, no scaling */
     }
     #backToGalleryBtn {
       background: #e5e7eb;
       color: #333;
-      bottom: 90px;           /* stacked above */
+      bottom: 80px;                /* stacked above */
     }
     #backToGalleryBtn:hover {
-      background: #d1d5db;    /* slightly darker gray */
+      background: #d1d5db;          /* slightly darker gray */
     }
 
     /* LETTER PAGE */
@@ -246,7 +260,7 @@
       margin: 1em 0;
     }
 
-    /* Hide fixed buttons by default */
+    /* Hide fixed navigation buttons by default */
     .fixed-btn {
       display: none;
     }
@@ -256,7 +270,10 @@
 <body>
   <canvas id="confettiCanvas"></canvas>
 
-  <!-- FIXED BUTTONS (visible only after Yes) -->
+  <!-- NO BUTTON (fixed to screen) -->
+  <button id="noBtn">No</button>
+
+  <!-- FIXED NAVIGATION BUTTONS (visible only after Yes) -->
   <button class="fixed-btn" id="toLetterBtn">Read the letter 💌</button>
   <button class="fixed-btn" id="backToGalleryBtn">← Back to photos</button>
 
@@ -287,7 +304,7 @@
 
       <section class="button-zone" id="zone">
         <button id="yesBtn">Yes</button>
-        <button id="noBtn">No</button>
+        <!-- No button is now outside -->
       </section>
 
       <div class="hint" id="hint">“No” doesn't seem to work?😊</div>
@@ -338,13 +355,13 @@
     const yesBtn = document.getElementById("yesBtn");
     const noBtn = document.getElementById("noBtn");
     const hint = document.getElementById("hint");
-    const zone = document.getElementById("zone");
+    const zone = document.getElementById("zone"); // still used for Yes button growth trigger
 
     // Pages
     const galleryPage = document.getElementById("galleryPage");
     const letterPage = document.getElementById("letterPage");
 
-    // Fixed buttons (now outside the card)
+    // Fixed navigation buttons
     const toLetterBtn = document.getElementById("toLetterBtn");
     const backBtn = document.getElementById("backToGalleryBtn");
 
@@ -399,35 +416,40 @@
       yesBtn.style.transform = `translateY(-50%) scale(${yesScale})`;
     }
 
-    // No button evasion
+    // No button evasion (now uses entire window)
     function clamp(n, min, max) {
       return Math.max(min, Math.min(max, n));
     }
 
     function moveNo(px, py) {
-      const z = zone.getBoundingClientRect();
       const b = noBtn.getBoundingClientRect();
+      const winW = window.innerWidth;
+      const winH = window.innerHeight;
 
+      // Direction away from pointer
       let dx = (b.left + b.width / 2) - px;
       let dy = (b.top + b.height / 2) - py;
       let mag = Math.hypot(dx, dy) || 1;
       dx /= mag;
       dy /= mag;
 
-      let newLeft = (b.left - z.left) + dx * 150;
-      let newTop  = (b.top - z.top) + dy * 150;
+      // New position (move 150px away)
+      let newLeft = b.left + dx * 150;
+      let newTop = b.top + dy * 150;
 
-      newLeft = clamp(newLeft, 0, z.width - b.width);
-      newTop  = clamp(newTop, 0, z.height - b.height);
+      // Clamp to window edges
+      newLeft = clamp(newLeft, 0, winW - b.width);
+      newTop = clamp(newTop, 0, winH - b.height);
 
       noBtn.style.left = newLeft + "px";
       noBtn.style.top = newTop + "px";
-      noBtn.style.transform = "none";
+      noBtn.style.transform = "none"; // remove any translate
 
       growYes();
     }
 
-    zone.addEventListener("pointermove", e => {
+    // Track pointer anywhere on the page
+    document.addEventListener("pointermove", e => {
       const b = noBtn.getBoundingClientRect();
       const d = Math.hypot(
         (b.left + b.width / 2) - e.clientX,
@@ -480,7 +502,6 @@
     function showGalleryPage() {
       galleryPage.classList.add("active");
       letterPage.classList.remove("active");
-      // Show/hide the correct fixed buttons
       toLetterBtn.style.display = "block";
       backBtn.style.display = "none";
     }
@@ -488,10 +509,8 @@
     function showLetterPage() {
       galleryPage.classList.remove("active");
       letterPage.classList.add("active");
-      // Reset envelope
       envelope.style.display = "block";
       letter.style.display = "none";
-      // Show/hide the correct fixed buttons
       toLetterBtn.style.display = "none";
       backBtn.style.display = "block";
     }
@@ -503,6 +522,8 @@
     yesBtn.addEventListener("click", () => {
       // Hide initial content
       initialContent.style.display = "none";
+      // Hide the No button (so it doesn't float over the gallery)
+      noBtn.style.display = "none";
       // Show result container
       resultDiv.style.display = "block";
       // Activate gallery page first
