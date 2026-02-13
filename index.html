@@ -40,14 +40,12 @@
       z-index: 9999;
     }
 
-    /* make card the positioning context for corner buttons */
+    /* CARD - now just a normal block */
     .card {
-      position: relative; /* <-- added */
       width: min(720px, 92vw);
       max-height: 85vh;
       overflow-y: auto;
       padding: 26px 22px;
-      padding-bottom: 140px; /* space for corner buttons so content won't be covered */
       background: var(--card);
       backdrop-filter: blur(10px);
       border-radius: 22px;
@@ -161,37 +159,31 @@
       background: white;
     }
 
-    /* moved next/back (page-level) buttons to card corners */
-    .next-btn {
-      position: absolute;
-      right: 22px;
-      bottom: 22px;
-      background: var(--yes);
-      color: white;
+    /* FIXED BUTTONS (screen corner) */
+    .fixed-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 10000;
       border: none;
       padding: 14px 30px;
       font-size: 20px;
       border-radius: 40px;
       cursor: pointer;
-      box-shadow: 0 8px 20px rgba(255,59,122,0.3);
-      z-index: 20;
-      display: inline-block;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      transition: transform 0.2s;
     }
-
-    .back-btn {
-      position: absolute;
-      right: 22px;
-      bottom: 82px; /* stacked above the next-btn */
+    .fixed-btn:hover {
+      transform: scale(1.05);
+    }
+    #toLetterBtn {
+      background: var(--yes);
+      color: white;
+    }
+    #backToGalleryBtn {
       background: #e5e7eb;
       color: #333;
-      border: none;
-      padding: 12px 25px;
-      font-size: 18px;
-      border-radius: 40px;
-      cursor: pointer;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      z-index: 20;
-      display: inline-block;
+      bottom: 90px; /* stacked above the other button */
     }
 
     /* LETTER PAGE */
@@ -252,17 +244,19 @@
       margin: 1em 0;
     }
 
-    /* responsive tweaks so corner buttons behave on small screens */
-    @media (max-width: 520px) {
-      .next-btn { right: 16px; bottom: 12px; padding: 12px 22px; font-size: 18px; }
-      .back-btn { right: 16px; bottom: 64px; padding: 10px 20px; font-size: 16px; }
-      .card { padding-bottom: 110px; }
+    /* Hide fixed buttons by default */
+    .fixed-btn {
+      display: none;
     }
   </style>
 </head>
 
 <body>
   <canvas id="confettiCanvas"></canvas>
+
+  <!-- FIXED BUTTONS (visible only after Yes) -->
+  <button class="fixed-btn" id="toLetterBtn">Read the letter 💌</button>
+  <button class="fixed-btn" id="backToGalleryBtn">← Back to photos</button>
 
   <main class="card">
     <!-- INITIAL CONTENT (shown before Yes) -->
@@ -310,9 +304,6 @@
             <button class="next" id="nextBtn" aria-label="Next image">&#10095;</button>
           </div>
         </div>
-
-        <!-- moved to corner via CSS -->
-        <button class="next-btn" id="toLetterBtn">Read the letter 💌</button>
       </div>
 
       <!-- LETTER PAGE -->
@@ -334,9 +325,6 @@
             <p>With all my love,<br>[Your name]</p>
           </div>
         </div>
-
-        <!-- moved to corner and stacked above the "Read the letter" button -->
-        <button class="back-btn" id="backToGalleryBtn">← Back to photos</button>
       </div>
     </div>
   </main>
@@ -353,6 +341,8 @@
     // Pages
     const galleryPage = document.getElementById("galleryPage");
     const letterPage = document.getElementById("letterPage");
+
+    // Fixed buttons (now outside the card)
     const toLetterBtn = document.getElementById("toLetterBtn");
     const backBtn = document.getElementById("backToGalleryBtn");
 
@@ -447,12 +437,12 @@
     noBtn.addEventListener("click", e => e.preventDefault());
 
     // ---------- GALLERY ----------
-    // placeholder images (you can replace these URLs with your own)
+    // ⬇️⬇️⬇️  REPLACE THESE URLS WITH YOUR OWN IMAGE LINKS  ⬇️⬇️⬇️
     const imageUrls = [
-      "https://via.placeholder.com/1000x700?text=Memory+1",
-      "https://via.placeholder.com/1000x700?text=Memory+2",
-      "https://via.placeholder.com/1000x700?text=Memory+3",
-      "https://via.placeholder.com/1000x700?text=Memory+4"
+      "https://via.placeholder.com/1000x700?text=Memory+1",  // replace with your first photo
+      "https://via.placeholder.com/1000x700?text=Memory+2",  // replace with your second photo
+      "https://via.placeholder.com/1000x700?text=Memory+3",  // replace with your third photo
+      "https://via.placeholder.com/1000x700?text=Memory+4"   // replace with your fourth photo
     ];
 
     let currentImageIndex = 0;
@@ -484,18 +474,24 @@
       letter.style.display = "block";
     });
 
-    // ---------- PAGE NAVIGATION ----------
+    // ---------- PAGE NAVIGATION (using fixed buttons) ----------
     function showGalleryPage() {
       galleryPage.classList.add("active");
       letterPage.classList.remove("active");
+      // Show/hide the correct fixed buttons
+      toLetterBtn.style.display = "block";
+      backBtn.style.display = "none";
     }
 
     function showLetterPage() {
       galleryPage.classList.remove("active");
       letterPage.classList.add("active");
-      // Reset envelope in case it was opened before
+      // Reset envelope
       envelope.style.display = "block";
       letter.style.display = "none";
+      // Show/hide the correct fixed buttons
+      toLetterBtn.style.display = "none";
+      backBtn.style.display = "block";
     }
 
     toLetterBtn.addEventListener("click", showLetterPage);
@@ -519,8 +515,10 @@
       fullScreenConfetti();
     });
 
-    // Initially hide result
+    // Initially hide result and fixed buttons
     resultDiv.style.display = "none";
+    toLetterBtn.style.display = "none";
+    backBtn.style.display = "none";
   </script>
 </body>
 </html>
