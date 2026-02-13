@@ -167,7 +167,7 @@
       box-shadow: 0 8px 20px rgba(0,0,0,0.3);
       transition: background-color 0.2s;
       transform: none !important;
-      margin: 0; /* no extra margins */
+      margin: 0;
       width: auto;
     }
     #toLetterBtn {
@@ -382,11 +382,11 @@
     noBtn.addEventListener("click", e => e.preventDefault());
 
     // ---------- GALLERY ----------
-    // ⬇️⬇️⬇️  REPLACE THESE WITH YOUR GOOGLE DRIVE IMAGE LINKS  ⬇️⬇️⬇️
+    // ✅ Using Google Drive thumbnail links (they often work)
     const imageUrls = [
-      "https://i.imgur.com/abc123.jpg",
-      "https://i.imgur.com/def456.jpg",
-      "https://i.imgur.com/ghi789.jpg"
+      "https://drive.google.com/thumbnail?id=1TuTfA-SSPM-wREZu8VWNQxVhDPSAQOUC&sz=w1000",
+      "https://drive.google.com/thumbnail?id=1XPpU-oMs6FgC2cdIbF1dCci4RBrbz3E7&sz=w1000",
+      "https://drive.google.com/thumbnail?id=14noqnDUWOTZ7saG4P4SFCCD0ns3pVD3v&sz=w1000"
     ];
 
     let currentImageIndex = 0;
@@ -451,4 +451,3 @@
   </script>
 </body>
 </html>
-
