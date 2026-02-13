@@ -40,7 +40,6 @@
       z-index: 9999;
     }
 
-    /* CARD - now just a normal block */
     .card {
       width: min(720px, 92vw);
       max-height: 85vh;
@@ -159,31 +158,34 @@
       background: white;
     }
 
-    /* FIXED BUTTONS (screen corner) */
+    /* FIXED BUTTONS (screen corner) - smaller & no movement */
     .fixed-btn {
       position: fixed;
       bottom: 20px;
       right: 20px;
       z-index: 10000;
       border: none;
-      padding: 14px 30px;
-      font-size: 20px;
+      padding: 10px 24px;
+      font-size: 18px;
       border-radius: 40px;
       cursor: pointer;
       box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-      transition: transform 0.2s;
-    }
-    .fixed-btn:hover {
-      transform: scale(1.05);
+      transition: background-color 0.2s;  /* only background changes */
     }
     #toLetterBtn {
       background: var(--yes);
       color: white;
     }
+    #toLetterBtn:hover {
+      background: #ff1f68;   /* darker pink, no scaling */
+    }
     #backToGalleryBtn {
       background: #e5e7eb;
       color: #333;
-      bottom: 90px; /* stacked above the other button */
+      bottom: 90px;           /* stacked above */
+    }
+    #backToGalleryBtn:hover {
+      background: #d1d5db;    /* slightly darker gray */
     }
 
     /* LETTER PAGE */
