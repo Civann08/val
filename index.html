@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Ashley will you be my valentines?</title>
+  <title>Valentines</title>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
   <style>
     :root {
@@ -148,7 +148,7 @@
     .gallery button:hover {
       background: white;
     }
-    /* FIXED BUTTON CONTAINER - perfect alignment */
+    /* fixed button container*/
     .fixed-button-container {
       position: fixed;
       bottom: 20px;
@@ -249,7 +249,7 @@
   <canvas id="confettiCanvas"></canvas>
   <button id="noBtn">No</button>
 
-  <!-- FIXED BUTTON CONTAINER (perfectly aligned) -->
+  <!-- fixed button containers -->
   <div class="fixed-button-container">
     <button class="fixed-btn" id="toLetterBtn">Open the letter</button>
     <button class="fixed-btn" id="backToGalleryBtn">← Back to photos</button>
@@ -302,7 +302,6 @@
             <div class="body"></div>
           </div>
           <div class="letter" id="letter" style="display: none;">
-            <!-- REPLACE THIS WITH YOUR OWN MESSAGE -->
             <p>blah </p>
             <p>blah</p>
             <p>blah</p>
@@ -381,11 +380,11 @@
 
     noBtn.addEventListener("click", e => e.preventDefault());
 
-    // ---------- GALLERY ----------
+    // GALLERY
+    //google thumbnail links only u can ask chat to help u make these links, just make sure u upload photos to your google drive and set link to view by anyone and then chat can help u make it 
     const imageUrls = [
       "https://drive.google.com/thumbnail?id=1TuTfA-SSPM-wREZu8VWNQxVhDPSAQOUC&sz=w1000",
-      "https://drive.google.com/thumbnail?id=1XPpU-oMs6FgC2cdIbF1dCci4RBrbz3E7&sz=w1000",
-      "https://drive.google.com/thumbnail?id=14noqnDUWOTZ7saG4P4SFCCD0ns3pVD3v&sz=w1000"
+      "https://drive.google.com/thumbnail?id=14noqnDUWOTZ7saG4P4SFCCD0ns3pVD3v&sz=w1000",
     ];
 
     let currentImageIndex = 0;
@@ -406,7 +405,7 @@
       showImage();
     });
 
-    // ---------- ENVELOPE ----------
+    // envelope
     const envelope = document.getElementById("envelope");
     const letter = document.getElementById("letter");
     envelope.addEventListener("click", () => {
@@ -414,7 +413,7 @@
       letter.style.display = "block";
     });
 
-    // ---------- PAGE NAVIGATION ----------
+    // page navigation
     function showGalleryPage() {
       galleryPage.classList.add("active");
       letterPage.classList.remove("active");
@@ -432,7 +431,7 @@
     toLetterBtn.addEventListener("click", showLetterPage);
     backBtn.addEventListener("click", showGalleryPage);
 
-    // ---------- YES CLICK ----------
+    // yes click
     yesBtn.addEventListener("click", () => {
       initialContent.style.display = "none";
       noBtn.style.display = "none";
@@ -450,4 +449,5 @@
   </script>
 </body>
 </html>
+
 
