@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Will you be my Valentine?</title>
+  <title>Ashley will you be my valentines?</title>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
   <style>
     :root {
@@ -251,7 +251,7 @@
 
   <!-- FIXED BUTTON CONTAINER (perfectly aligned) -->
   <div class="fixed-button-container">
-    <button class="fixed-btn" id="toLetterBtn">Read the letter 💌</button>
+    <button class="fixed-btn" id="toLetterBtn">Open the letter</button>
     <button class="fixed-btn" id="backToGalleryBtn">← Back to photos</button>
   </div>
 
@@ -276,16 +276,16 @@
         <circle cx="220" cy="130" r="8"/>
         <path d="M190 144 C186 144 182 148 182 152 C182 160 190 164 190 170 C190 164 198 160 198 152 C198 148 194 144 190 144Z" fill="#ff7aa2"/>
       </svg>
-      <h1>Ashley will you be my valentine?</h1>
+      <h1>BLANK will you be my valentine?</h1>
       <section class="button-zone" id="zone">
         <button id="yesBtn">Yes</button>
       </section>
-      <div class="hint" id="hint">“No” doesn't seem to work?😊</div>
+      <div class="hint" id="hint">I think you have to click yes</div>
     </div>
 
     <div id="result">
       <div id="galleryPage" class="page">
-        <h2>yay! lets go I thought you were gonna pick no</h2>
+        <h2>yay now lets take a look at the last 11 months togeather! </h2>
         <div class="gallery-container">
           <div class="gallery">
             <button class="prev" id="prevBtn">&#10094;</button>
@@ -295,7 +295,7 @@
         </div>
       </div>
       <div id="letterPage" class="page">
-        <h2>✉️ A letter for you</h2>
+        <h2> A letter for you </h2>
         <div class="envelope-container">
           <div class="envelope" id="envelope">
             <div class="flap"></div>
@@ -303,10 +303,10 @@
           </div>
           <div class="letter" id="letter" style="display: none;">
             <!-- REPLACE THIS WITH YOUR OWN MESSAGE -->
-            <p>My dearest Ashley,</p>
-            <p>From the moment we met, you've filled my days with joy and laughter...</p>
-            <p>I'm so glad you said yes. Happy Valentine's Day!</p>
-            <p>With all my love,<br>[Your name]</p>
+            <p>blah </p>
+            <p>blah</p>
+            <p>blah</p>
+            <p>blah,<br>[blah]</p>
           </div>
         </div>
       </div>
@@ -382,7 +382,6 @@
     noBtn.addEventListener("click", e => e.preventDefault());
 
     // ---------- GALLERY ----------
-    // ✅ Using Google Drive thumbnail links (they often work)
     const imageUrls = [
       "https://drive.google.com/thumbnail?id=1TuTfA-SSPM-wREZu8VWNQxVhDPSAQOUC&sz=w1000",
       "https://drive.google.com/thumbnail?id=1XPpU-oMs6FgC2cdIbF1dCci4RBrbz3E7&sz=w1000",
@@ -451,3 +450,4 @@
   </script>
 </body>
 </html>
+
