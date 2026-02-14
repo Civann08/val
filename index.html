@@ -276,7 +276,7 @@
   <!-- fixed button containers -->
   <div class="fixed-button-container">
     <button class="fixed-btn" id="toLetterBtn">Open the letter</button>
-    <button class="fixed-btn" id="backToGalleryBtn">← Back to photos</button>
+    <button class="fixed-btn" id="backToGalleryBtn">Back to photos</button>
   </div>
 
   <main class="card">
@@ -309,7 +309,7 @@
 
     <div id="result">
       <div id="galleryPage" class="page">
-        <h2>yay now lets take a look at the last 11 months we've spent togeather </h2>
+        <h2>YAYYYYYYY now lets take a look at the last 11 months we've spent togeather! </h2>
         <div class="gallery-container">
           <div class="gallery">
             <button class="prev" id="prevBtn">&#10094;</button>
@@ -319,14 +319,14 @@
         </div>
       </div>
       <div id="letterPage" class="page">
-        <h2> A letter for you </h2>
+        <h2> Lol who gets a letter in the big 2026 </h2>
         <div class="envelope-container">
           <div class="envelope" id="envelope">
             <div class="flap"></div>
             <div class="body"></div>
           </div>
           <div class="letter" id="letter" style="display: none;">
-            <p>blah </p>
+            <p>blah</p>
             <p>blah</p>
             <p>blah</p>
             <p>blah,<br>[blah]</p>
@@ -345,7 +345,7 @@
         const heart = document.createElement('div');
         heart.className = 'heart';
         heart.innerHTML = '❤️';
-        const size = Math.random() * 3 + 1; // 1rem to 4rem
+        const size = Math.random() * 3 + 1;
         heart.style.fontSize = size + 'rem';
         heart.style.left = Math.random() * 100 + '%';
         heart.style.top = Math.random() * 100 + '%';
@@ -396,7 +396,7 @@
 
     let yesScale = 1;
     function growYes() {
-      yesScale = Math.min(3, yesScale + 0.1);
+      yesScale = Math.min(2.5, yesScale + 0.05);
       yesBtn.style.transform = `translateY(-50%) scale(${yesScale})`;
     }
 
@@ -428,8 +428,18 @@
     // GALLERY
     //google thumbnail links only u can ask chat to help u make these links, just make sure u upload photos to your google drive and set link to view by anyone and then chat can help u make it 
     const imageUrls = [
-      "https://drive.google.com/thumbnail?id=1TuTfA-SSPM-wREZu8VWNQxVhDPSAQOUC&sz=w1000",
-      "https://drive.google.com/thumbnail?id=14noqnDUWOTZ7saG4P4SFCCD0ns3pVD3v&sz=w1000",
+      "https://drive.google.com/thumbnail?id=1TuTfA-SSPM-wREZu8VWNQxVhDPSAQOUC&sz=w1000",//library
+      "https://drive.google.com/thumbnail?id=14noqnDUWOTZ7saG4P4SFCCD0ns3pVD3v&sz=w1000", //mirror room
+      "https://drive.google.com/thumbnail?id=13G4582t_tiwHwt7sPsnOihK7lhQR356z&sz=w1000", // ashley agaisnt the sunset
+      "https://drive.google.com/thumbnail?id=1VuAGFW4xVin8QLn6d_JqrTKjc8Abk1fi&sz=w1000", // ashley sleeping
+      "https://drive.google.com/thumbnail?id=1cGUza4oaRs8EC4QyuSmG2ByXZL2bPzeL&sz=w1000", // AGO
+      "https://drive.google.com/thumbnail?id=1f4jZZXNqxH5JFxt3qsm_0T1Jbs9qg1x0&sz=w1000", // Chicken PLus
+      "https://drive.google.com/thumbnail?id=1KjmUT7788SpVQ-FBtPjzEEIOYWHbgjfW&sz=w1000", // Ana
+      "https://drive.google.com/thumbnail?id=17m_QMwOFCEgsrLKTr0Uh-t4gI6FxgW80&sz=w1000", // Bench Popeyes
+      "https://drive.google.com/thumbnail?id=1XPpU-oMs6FgC2cdIbF1dCci4RBrbz3E7&sz=w1000", // Toungue
+      "https://drive.google.com/thumbnail?id=1F_sJHEcdi3oWG5HvuIOp8gdO4YcnZdFP&sz=w1000", // ath banquet
+      "https://drive.google.com/thumbnail?id=1LN4Bw9-QDFsTCuwvp69ydLD8OnbKilVW&sz=w1000"  // burnt meat
+      
     ];
 
     let currentImageIndex = 0;
@@ -497,3 +507,4 @@
   </script>
 </body>
 </html>
+
